@@ -1,0 +1,33 @@
+<div class="w-1/2 bg-primary">
+</div>
+<div class="w-1/2 flex flex-col justify-center relative">
+  <button class="absolute top-10 right-10" hlmBtn type="button" (click)="onDisplayForm()">{{ isLoginForm() ?
+    "Inscription" : "Connexion" }}</button>
+  <h1 class="text-2xl font-bold mb-1 text-center">
+    {{ isLoginForm() ? 'Connexion' : 'Créer votre compte' }}
+  </h1>
+  <p class="mb-6 text-center">
+    {{ isLoginForm() ? 'Entrez vos informations pour vous connecter' : 'Entrer votre nom complet, email, et mot de
+    passe' }}
+  </p>
+  <form class="flex items-center flex-col" [formGroup]="authForm" (submit)="onSubmit()">
+    <div class="mb-4">
+      <input class="w-80" hlmInput placeholder='Email*' type='email' formControlName="email" />
+      @if (emailControl.invalid && (emailControl.dirty || emailControl.touched)) {
+      <p class="text-xs text-red-600 mt-2">
+        {{ emailControl.errors?.['required'] ? 'Champs obligatoire' : 'Invalid email'}}
+      </p>
+      }
+    </div>
+    <div class="mb-4">
+      <input class="w-80" hlmInput placeholder='Mot de passe*' type='password' formControlName="password" />
+      @if (passwordControl.invalid && (passwordControl.dirty || passwordControl.touched)) {
+      <p class="text-xs text-red-600">Champs obligatoire</p>
+      }
+    </div>
+    <button class="w-80 mb-4" hlmBtn type="submit" [disabled]="authForm.invalid">
+      {{ isLoginForm() ? 'Connexion' : 'Inscription' }}
+    </button>
+  </form>
+  <p class="text-center text-sm text-red-600 mb-4">{{ authErrorMessage() }}</p>
+</div>
